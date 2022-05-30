@@ -42,19 +42,14 @@ class LinkDialogState extends State<LinkDialog> {
         maxLines: null,
         style: widget.dialogTheme?.inputTextStyle,
         decoration: InputDecoration(
-            labelText: 'Paste a link'.i18n,
-            labelStyle: widget.dialogTheme?.labelTextStyle,
-            floatingLabelStyle: widget.dialogTheme?.labelTextStyle),
+            labelText: 'Paste a link'.i18n, labelStyle: widget.dialogTheme?.labelTextStyle, floatingLabelStyle: widget.dialogTheme?.labelTextStyle),
         autofocus: true,
         onChanged: _linkChanged,
         controller: _controller,
       ),
       actions: [
         TextButton(
-          onPressed: _link.isNotEmpty &&
-                  AutoFormatMultipleLinksRule.linkRegExp.hasMatch(_link)
-              ? _applyLink
-              : null,
+          onPressed: _link.isNotEmpty && AutoFormatMultipleLinksRule.linkRegExp.hasMatch(_link) ? _applyLink : null,
           child: Text(
             'Ok'.i18n,
             style: widget.dialogTheme?.labelTextStyle,
@@ -114,13 +109,8 @@ class ImageVideoUtils {
       );
 
   /// For image picking logic
-  static Future<void> handleImageButtonTap(
-      BuildContext context,
-      QuillController controller,
-      ImageSource imageSource,
-      OnImagePickCallback onImagePickCallback,
-      {FilePickImpl? filePickImpl,
-      WebImagePickImpl? webImagePickImpl}) async {
+  static Future<void> handleImageButtonTap(BuildContext context, QuillController controller, ImageSource imageSource, OnImagePickCallback onImagePickCallback,
+      {FilePickImpl? filePickImpl, WebImagePickImpl? webImagePickImpl}) async {
     final index = controller.selection.baseOffset;
     final length = controller.selection.extentOffset - index;
 
@@ -135,8 +125,7 @@ class ImageVideoUtils {
       imageUrl = await _pickImage(imageSource, onImagePickCallback);
     } else {
       assert(filePickImpl != null, 'Desktop must provide filePickImpl');
-      imageUrl =
-          await _pickImageDesktop(context, filePickImpl!, onImagePickCallback);
+      imageUrl = await _pickImageDesktop(context, filePickImpl!, onImagePickCallback);
     }
 
     if (imageUrl != null) {
@@ -144,8 +133,7 @@ class ImageVideoUtils {
     }
   }
 
-  static Future<String?> _pickImage(
-      ImageSource source, OnImagePickCallback onImagePickCallback) async {
+  static Future<String?> _pickImage(ImageSource source, OnImagePickCallback onImagePickCallback) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
     if (pickedFile == null) {
       return null;
@@ -154,10 +142,7 @@ class ImageVideoUtils {
     return onImagePickCallback(File(pickedFile.path));
   }
 
-  static Future<String?> _pickImageDesktop(
-      BuildContext context,
-      FilePickImpl filePickImpl,
-      OnImagePickCallback onImagePickCallback) async {
+  static Future<String?> _pickImageDesktop(BuildContext context, FilePickImpl filePickImpl, OnImagePickCallback onImagePickCallback) async {
     final filePath = await filePickImpl(context);
     if (filePath == null || filePath.isEmpty) return null;
 
@@ -166,13 +151,8 @@ class ImageVideoUtils {
   }
 
   /// For video picking logic
-  static Future<void> handleVideoButtonTap(
-      BuildContext context,
-      QuillController controller,
-      ImageSource videoSource,
-      OnVideoPickCallback onVideoPickCallback,
-      {FilePickImpl? filePickImpl,
-      WebVideoPickImpl? webVideoPickImpl}) async {
+  static Future<void> handleVideoButtonTap(BuildContext context, QuillController controller, ImageSource videoSource, OnVideoPickCallback onVideoPickCallback,
+      {FilePickImpl? filePickImpl, WebVideoPickImpl? webVideoPickImpl}) async {
     final index = controller.selection.baseOffset;
     final length = controller.selection.extentOffset - index;
 
@@ -187,8 +167,7 @@ class ImageVideoUtils {
       videoUrl = await _pickVideo(videoSource, onVideoPickCallback);
     } else {
       assert(filePickImpl != null, 'Desktop must provide filePickImpl');
-      videoUrl =
-          await _pickVideoDesktop(context, filePickImpl!, onVideoPickCallback);
+      videoUrl = await _pickVideoDesktop(context, filePickImpl!, onVideoPickCallback);
     }
 
     if (videoUrl != null) {
@@ -196,8 +175,7 @@ class ImageVideoUtils {
     }
   }
 
-  static Future<String?> _pickVideo(
-      ImageSource source, OnVideoPickCallback onVideoPickCallback) async {
+  static Future<String?> _pickVideo(ImageSource source, OnVideoPickCallback onVideoPickCallback) async {
     final pickedFile = await ImagePicker().pickVideo(source: source);
     if (pickedFile == null) {
       return null;
@@ -206,10 +184,7 @@ class ImageVideoUtils {
     return onVideoPickCallback(File(pickedFile.path));
   }
 
-  static Future<String?> _pickVideoDesktop(
-      BuildContext context,
-      FilePickImpl filePickImpl,
-      OnVideoPickCallback onVideoPickCallback) async {
+  static Future<String?> _pickVideoDesktop(BuildContext context, FilePickImpl filePickImpl, OnVideoPickCallback onVideoPickCallback) async {
     final filePath = await filePickImpl(context);
     if (filePath == null || filePath.isEmpty) return null;
 

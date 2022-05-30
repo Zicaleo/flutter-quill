@@ -81,9 +81,10 @@ class CameraButton extends StatelessWidget {
                     icon: const Icon(Icons.photo, color: Colors.cyanAccent),
                     label: const Text('拍攝照片'),
                     onPressed: () async {
-                      if ( onBeforeImagePick == null || await onBeforeImagePick!(context)) {
-                      ImageVideoUtils.handleImageButtonTap(context, controller, ImageSource.camera, onImagePickCallback,
-                          filePickImpl: filePickImpl, webImagePickImpl: webImagePickImpl);
+                      if (onBeforeImagePick == null || await onBeforeImagePick!(context)) {
+                        ImageVideoUtils.handleImageButtonTap(context, controller, ImageSource.camera, onImagePickCallback,
+                            filePickImpl: filePickImpl, webImagePickImpl: webImagePickImpl);
+                      }
                     },
                   ),
                   TextButton.icon(
@@ -91,9 +92,8 @@ class CameraButton extends StatelessWidget {
                     label: const Text('拍攝影片'),
                     onPressed: () async {
                       if (onBeforeVideoPick == null || await onBeforeVideoPick!(context)) {
-                          ImageVideoUtils.handleVideoButtonTap(context, controller, ImageSource.camera, onVideoPickCallback,
-                              filePickImpl: filePickImpl, webVideoPickImpl: webVideoPickImpl);
-                        }
+                        ImageVideoUtils.handleVideoButtonTap(context, controller, ImageSource.camera, onVideoPickCallback,
+                            filePickImpl: filePickImpl, webVideoPickImpl: webVideoPickImpl);
                       }
                     },
                   )

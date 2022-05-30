@@ -11,7 +11,9 @@ class CameraButton extends StatelessWidget {
     required this.controller,
     this.iconSize = kDefaultIconSize,
     this.fillColor,
+    this.onBeforeImagePick,
     this.onImagePickCallback,
+    this.onBeforeVideoPick,
     this.onVideoPickCallback,
     this.filePickImpl,
     this.webImagePickImpl,
@@ -27,7 +29,11 @@ class CameraButton extends StatelessWidget {
 
   final QuillController controller;
 
+  final Future<bool> Function(BuildContext context)? onBeforeImagePick;
+
   final OnImagePickCallback? onImagePickCallback;
+
+  final Future<bool> Function(BuildContext context)? onBeforeVideoPick;
 
   final OnVideoPickCallback? onVideoPickCallback;
 
@@ -74,7 +80,8 @@ class CameraButton extends StatelessWidget {
                   TextButton.icon(
                     icon: const Icon(Icons.photo, color: Colors.cyanAccent),
                     label: const Text('拍攝照片'),
-                    onPressed: () {
+                    onPressed: () async {
+                      if ( onBeforeImagePick == null || await onBeforeImagePick!(context)) {
                       ImageVideoUtils.handleImageButtonTap(context, controller, ImageSource.camera, onImagePickCallback,
                           filePickImpl: filePickImpl, webImagePickImpl: webImagePickImpl);
                     },
@@ -82,9 +89,12 @@ class CameraButton extends StatelessWidget {
                   TextButton.icon(
                     icon: const Icon(Icons.movie_creation, color: Colors.orangeAccent),
                     label: const Text('拍攝影片'),
-                    onPressed: () {
-                      ImageVideoUtils.handleVideoButtonTap(context, controller, ImageSource.camera, onVideoPickCallback,
-                          filePickImpl: filePickImpl, webVideoPickImpl: webVideoPickImpl);
+                    onPressed: () async {
+                      if (onBeforeVideoPick == null || await onBeforeVideoPick!(context)) {
+                          ImageVideoUtils.handleVideoButtonTap(context, controller, ImageSource.camera, onVideoPickCallback,
+                              filePickImpl: filePickImpl, webVideoPickImpl: webVideoPickImpl);
+                        }
+                      }
                     },
                   )
                 ]));

@@ -69,7 +69,7 @@ class CameraButton extends StatelessWidget {
           builder: (context) {
             return AlertDialog(
                 contentPadding: const EdgeInsets.all(0),
-                backgroundColor: Colors.transparent,
+                backgroundColor: Colors.white,
                 content: Column(mainAxisSize: MainAxisSize.min, children: [
                   TextButton.icon(
                     icon: const Icon(Icons.photo, color: Colors.cyanAccent),

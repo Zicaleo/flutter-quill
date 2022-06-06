@@ -16,8 +16,7 @@ import 'image_resizer.dart';
 import 'video_app.dart';
 import 'youtube_video_app.dart';
 
-Widget defaultEmbedBuilder(BuildContext context, QuillController controller,
-    leaf.Embed node, bool readOnly) {
+Widget defaultEmbedBuilder(BuildContext context, QuillController controller, leaf.Embed node, bool readOnly) {
   assert(!kIsWeb, 'Please provide EmbedBuilder for Web');
 
   Tuple2<double?, double?>? _widthHeight;
@@ -27,27 +26,16 @@ Widget defaultEmbedBuilder(BuildContext context, QuillController controller,
       var image;
       final style = node.style.attributes['style'];
       if (isMobile() && style != null) {
-        final _attrs = parseKeyValuePairs(style.value.toString(), {
-          Attribute.mobileWidth,
-          Attribute.mobileHeight,
-          Attribute.mobileMargin,
-          Attribute.mobileAlignment
-        });
+        final _attrs =
+            parseKeyValuePairs(style.value.toString(), {Attribute.mobileWidth, Attribute.mobileHeight, Attribute.mobileMargin, Attribute.mobileAlignment});
         if (_attrs.isNotEmpty) {
-          assert(
-              _attrs[Attribute.mobileWidth] != null &&
-                  _attrs[Attribute.mobileHeight] != null,
-              'mobileWidth and mobileHeight must be specified');
+          assert(_attrs[Attribute.mobileWidth] != null && _attrs[Attribute.mobileHeight] != null, 'mobileWidth and mobileHeight must be specified');
           final w = double.parse(_attrs[Attribute.mobileWidth]!);
           final h = double.parse(_attrs[Attribute.mobileHeight]!);
           _widthHeight = Tuple2(w, h);
-          final m = _attrs[Attribute.mobileMargin] == null
-              ? 0.0
-              : double.parse(_attrs[Attribute.mobileMargin]!);
+          final m = _attrs[Attribute.mobileMargin] == null ? 0.0 : double.parse(_attrs[Attribute.mobileMargin]!);
           final a = getAlignment(_attrs[Attribute.mobileAlignment]);
-          image = Padding(
-              padding: EdgeInsets.all(m),
-              child: imageByUrl(imageUrl, width: w, height: h, alignment: a));
+          image = Padding(padding: EdgeInsets.all(m), child: imageByUrl(imageUrl, width: w, height: h, alignment: a));
         }
       }
 
@@ -74,12 +62,9 @@ Widget defaultEmbedBuilder(BuildContext context, QuillController controller,
                               final _screenSize = MediaQuery.of(context).size;
                               return ImageResizer(
                                   onImageResize: (w, h) {
-                                    final res = getImageNode(
-                                        controller, controller.selection.start);
-                                    final attr = replaceStyleString(
-                                        getImageStyleString(controller), w, h);
-                                    controller.formatText(
-                                        res.item1, 1, StyleAttribute(attr));
+                                    final res = getImageNode(controller, controller.selection.start);
+                                    final attr = replaceStyleString(getImageStyleString(controller), w, h);
+                                    controller.formatText(res.item1, 1, StyleAttribute(attr));
                                   },
                                   imageWidth: _widthHeight?.item1,
                                   imageHeight: _widthHeight?.item2,
@@ -93,12 +78,9 @@ Widget defaultEmbedBuilder(BuildContext context, QuillController controller,
                       color: Colors.cyanAccent,
                       text: 'Copy'.i18n,
                       onPressed: () {
-                        final imageNode =
-                            getImageNode(controller, controller.selection.start)
-                                .item2;
+                        final imageNode = getImageNode(controller, controller.selection.start).item2;
                         final imageUrl = imageNode.value.data;
-                        controller.copiedImageUrl =
-                            Tuple2(imageUrl, getImageStyleString(controller));
+                        controller.copiedImageUrl = Tuple2(imageUrl, getImageStyleString(controller));
                         Navigator.pop(context);
                       },
                     );
@@ -107,21 +89,18 @@ Widget defaultEmbedBuilder(BuildContext context, QuillController controller,
                       color: Colors.red.shade200,
                       text: 'Remove'.i18n,
                       onPressed: () {
-                        final offset =
-                            getImageNode(controller, controller.selection.start)
-                                .item1;
-                        controller.replaceText(offset, 1, '',
-                            TextSelection.collapsed(offset: offset));
+                        final offset = getImageNode(controller, controller.selection.start).item1;
+                        controller.replaceText(offset, 1, '', TextSelection.collapsed(offset: offset));
                         Navigator.pop(context);
                       },
                     );
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
-                      child: SimpleDialog(
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          children: [resizeOption, copyOption, removeOption]),
+                      child: SimpleDialog(shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))), children: [
+                        // resizeOption,
+                        copyOption,
+                        removeOption
+                      ]),
                     );
                   });
             },
@@ -137,8 +116,7 @@ Widget defaultEmbedBuilder(BuildContext context, QuillController controller,
     case BlockEmbed.videoType:
       final videoUrl = node.value.data;
       if (videoUrl.contains('youtube.com') || videoUrl.contains('youtu.be')) {
-        return YoutubeVideoApp(
-            videoUrl: videoUrl, context: context, readOnly: readOnly);
+        return YoutubeVideoApp(videoUrl: videoUrl, context: context, readOnly: readOnly);
       }
       return VideoApp(videoUrl: videoUrl, context: context, readOnly: readOnly);
     default:
@@ -150,8 +128,7 @@ Widget defaultEmbedBuilder(BuildContext context, QuillController controller,
   }
 }
 
-Widget _menuOptionsForReadonlyImage(
-    BuildContext context, String imageUrl, Image image) {
+Widget _menuOptionsForReadonlyImage(BuildContext context, String imageUrl, Image image) {
   return GestureDetector(
       onTap: () {
         showDialog(
@@ -164,8 +141,7 @@ Widget _menuOptionsForReadonlyImage(
                 onPressed: () {
                   imageUrl = appendFileExtensionToImageUrl(imageUrl);
                   GallerySaver.saveImage(imageUrl).then((_) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text('Saved'.i18n)));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Saved'.i18n)));
                     Navigator.pop(context);
                   });
                 },
@@ -175,19 +151,13 @@ Widget _menuOptionsForReadonlyImage(
                 color: Colors.cyanAccent,
                 text: 'Zoom'.i18n,
                 onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ImageTapWrapper(imageUrl: imageUrl)));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ImageTapWrapper(imageUrl: imageUrl)));
                 },
               );
               return Padding(
                 padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
-                child: SimpleDialog(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    children: [saveOption, zoomOption]),
+                child:
+                    SimpleDialog(shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))), children: [saveOption, zoomOption]),
               );
             });
       },
@@ -195,13 +165,7 @@ Widget _menuOptionsForReadonlyImage(
 }
 
 class _SimpleDialogItem extends StatelessWidget {
-  const _SimpleDialogItem(
-      {required this.icon,
-      required this.color,
-      required this.text,
-      required this.onPressed,
-      Key? key})
-      : super(key: key);
+  const _SimpleDialogItem({required this.icon, required this.color, required this.text, required this.onPressed, Key? key}) : super(key: key);
 
   final IconData icon;
   final Color color;
@@ -217,8 +181,7 @@ class _SimpleDialogItem extends StatelessWidget {
           Icon(icon, size: 36, color: color),
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 16),
-            child:
-                Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
+            child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),

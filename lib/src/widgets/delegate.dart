@@ -6,8 +6,13 @@ import 'package:flutter/scheduler.dart';
 import '../../flutter_quill.dart';
 import 'text_selection.dart';
 
-typedef EmbedBuilder = Widget Function(BuildContext context,
-    QuillController controller, Embed node, bool readOnly);
+typedef EmbedBuilder = Widget Function(
+  BuildContext context,
+  QuillController controller,
+  Embed node,
+  bool readOnly,
+  void Function(GlobalKey videoContainerKey)? onVideoInit,
+);
 
 typedef CustomStyleBuilder = TextStyle Function(Attribute attribute);
 
@@ -259,7 +264,7 @@ class EditorTextSelectionGestureDetectorBuilder {
       // if double tap happens on an editor that doesn't
       // have focus, selection hasn't been set when the toolbars
       // get added
-      SchedulerBinding.instance!.addPostFrameCallback((_) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
         if (shouldShowSelectionToolbar) {
           editor!.showToolbar();
         }

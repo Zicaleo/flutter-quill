@@ -1,3 +1,48 @@
+# [5.0.4]
+* Added onVideoInit callback for video documents.
+
+# [5.0.3]
+* Update dependencies.
+
+# [5.0.2]
+* Keep cursor position on checkbox tap.
+
+# [5.0.1]
+* Fix static analysis errors.
+
+# [5.0.0]
+* Flutter 3.0.0 support.
+
+# [4.2.3]
+* Ignore color:inherit and convert double to int for level.
+
+# [4.2.2]
+* Add clear option to font size dropdown.
+
+# [4.2.1]
+* Refactor font size dropdown.
+
+# [4.2.0]
+* Ensure selectionOverlay is available for showToolbar.
+
+# [4.1.9]
+* Using properly iconTheme colors.
+
+# [4.1.8]
+* Update font size dropdown.
+
+# [4.1.7]
+* Convert FontSize to a Map to allow for named Font Size.
+
+# [4.1.6]
+* Update quill_dropdown_button.dart.
+
+# [4.1.5]
+* Add Font Size dropdown to the toolbar.
+
+# [4.1.4]
+* New borderRadius for iconTheme.
+
 # [4.1.3]
 * Fix selection handles show/hide after paste, backspace, copy.
 

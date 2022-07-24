@@ -30,7 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.4
   path_provider: ^2.0.9
   filesystem_picker: ^2.0.0
-  file_picker: ^4.5.1
+  file_picker: ^4.6.1
   flutter_quill:
     path: ../
 
@@ -56,7 +56,16 @@ flutter:
   assets:
     - assets/
 
-
+  fonts:
+    - family: monospace
+      fonts:
+        - asset: assets/fonts/MonoSpace.ttf
+    - family: serif
+      fonts:
+        - asset: assets/fonts/Serif.ttf
+    - family: sans-serif
+      fonts:
+        - asset: assets/fonts/SansSerif.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

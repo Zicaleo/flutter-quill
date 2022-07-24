@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -86,6 +88,7 @@ class CameraButton extends StatelessWidget {
                         ImageVideoUtils.handleImageButtonTap(context, controller, ImageSource.camera, onImagePickCallback,
                             filePickImpl: filePickImpl, webImagePickImpl: webImagePickImpl);
                       }
+                      Navigator.of(context).pop();
                     },
                   ),
                   TextButton.icon(
@@ -96,6 +99,7 @@ class CameraButton extends StatelessWidget {
                         ImageVideoUtils.handleVideoButtonTap(context, controller, ImageSource.camera, onVideoPickCallback,
                             filePickImpl: filePickImpl, webVideoPickImpl: webVideoPickImpl);
                       }
+                      Navigator.of(context).pop();
                     },
                   )
                 ]));

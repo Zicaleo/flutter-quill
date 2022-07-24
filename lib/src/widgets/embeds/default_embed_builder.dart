@@ -143,35 +143,36 @@ Widget defaultEmbedBuilder(
 Widget _menuOptionsForReadonlyImage(BuildContext context, String imageUrl, Widget image) {
   return GestureDetector(
       onTap: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              final saveOption = _SimpleDialogItem(
-                icon: Icons.save,
-                color: Colors.greenAccent,
-                text: 'Save'.i18n,
-                onPressed: () {
-                  imageUrl = appendFileExtensionToImageUrl(imageUrl);
-                  GallerySaver.saveImage(imageUrl).then((_) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Saved'.i18n)));
-                    Navigator.pop(context);
-                  });
-                },
-              );
-              final zoomOption = _SimpleDialogItem(
-                icon: Icons.zoom_in,
-                color: Colors.cyanAccent,
-                text: 'Zoom'.i18n,
-                onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ImageTapWrapper(imageUrl: imageUrl)));
-                },
-              );
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
-                child:
-                    SimpleDialog(shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))), children: [saveOption, zoomOption]),
-              );
-            });
+        // TODO: disable popup by params
+        // showDialog(
+        //     context: context,
+        //     builder: (context) {
+        //       final saveOption = _SimpleDialogItem(
+        //         icon: Icons.save,
+        //         color: Colors.greenAccent,
+        //         text: 'Save'.i18n,
+        //         onPressed: () {
+        //           imageUrl = appendFileExtensionToImageUrl(imageUrl);
+        //           GallerySaver.saveImage(imageUrl).then((_) {
+        //             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Saved'.i18n)));
+        //             Navigator.pop(context);
+        //           });
+        //         },
+        //       );
+        //       final zoomOption = _SimpleDialogItem(
+        //         icon: Icons.zoom_in,
+        //         color: Colors.cyanAccent,
+        //         text: 'Zoom'.i18n,
+        //         onPressed: () {
+        //           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ImageTapWrapper(imageUrl: imageUrl)));
+        //         },
+        //       );
+        //       return Padding(
+        //         padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+        //         child:
+        //             SimpleDialog(shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))), children: [saveOption, zoomOption]),
+        //       );
+        //     });
       },
       child: image);
 }
